@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إبراهيم الـ 18 | ميثاق الإخوة والدم</title>
+    
+    <!-- Google Fonts: Amiri for classic poetry, Tajawal and Cairo for modern interface -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== FULL RESPONSIVE DESIGN FOR ALL DEVICES ===== */
+        @media (max-width: 480px) {
+            .wrapper { padding: 60px 14px; gap: 40px; }
+            .title-container h1 { font-size: 2rem; }
+            .top-subtitle { font-size: 0.75rem; letter-spacing: 2px; flex-wrap: wrap; justify-content: center; }
+            .hero-card { padding: 28px 16px; gap: 30px; }
+            .hero-left h2 { font-size: 1.6rem; }
+            .hero-left p { font-size: 0.98rem; line-height: 1.75; }
+            .giant-badge-18 { font-size: 7rem; }
+            .giant-badge-halo { width: 180px; height: 180px; }
+            .card { padding: 28px 18px; border-radius: 18px; }
+            .brotherhood-title { font-size: 1.5rem; }
+            .brotherhood-body { font-size: 1rem; line-height: 1.9; }
+            .brotherhood-graphic { height: 130px; }
+            .poetry-card { padding: 35px 18px; }
+            .poetry-title { font-size: 1.8rem; }
+            .poem-container { font-size: 1.1rem; line-height: 2; }
+            .poem-verse { grid-template-columns: 1fr; gap: 4px; margin: 22px 0; }
+            .poem-separator { display: none; }
+            .poem-hint { font-size: 0.78rem; }
+            .celebration-card { padding: 38px 18px; }
+            .celebration-title { font-size: 1.7rem; }
+            .celebration-desc { font-size: 0.98rem; }
+            .ignite-btn { font-size: 1rem; padding: 14px 32px; }
+            .letter-content { font-size: 1rem; line-height: 2; }
+            .letter-header h3 { font-size: 1.25rem; }
+            .letter-footer { flex-direction: column; gap: 10px; text-align: center; }
+            .audio-hud { top: 15px; left: 15px; padding: 7px 12px; }
+            .audio-label { display: none; }
+            .loader-number { font-size: 70px; }
+            .loader-poetic-line { font-size: 1.05rem; }
+            .loader-button { font-size: 0.95rem; padding: 11px 28px; }
+            .flags-unity { flex-direction: column; gap: 12px; }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .wrapper { padding: 70px 18px; gap: 50px; }
+            .title-container h1 { font-size: 2.6rem; }
+            .hero-card { padding: 35px 22px; gap: 35px; }
+            .hero-left h2 { font-size: 1.9rem; }
+            .giant-badge-18 { font-size: 8rem; }
+            .card { padding: 35px 25px; border-radius: 22px; }
+            .brotherhood-title { font-size: 1.75rem; }
+            .poem-container { font-size: 1.3rem; }
+            .poem-verse { grid-template-columns: 1fr; gap: 6px; margin: 28px 0; }
+            .poem-separator { display: none; }
+            .celebration-title { font-size: 2rem; }
+            .ignite-btn { font-size: 1.1rem; padding: 15px 38px; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .wrapper { padding: 80px 28px; }
+            .title-container h1 { font-size: 3.5rem; }
+            .hero-left h2 { font-size: 2.1rem; }
+            .giant-badge-18 { font-size: 10rem; }
+            .poem-container { font-size: 1.5rem; }
+        }
+        /* Premium CSS Reset & Variable System */
+        :root {
+            --bg-dark: #030305;
+            --bg-deep: #07070b;
+            --gold: #d4b26f;
+            --gold-bright: #ffd700;
+            --gold-glow: rgba(212, 178, 111, 0.55);
+            --crimson: #e63946;
+            --crimson-glow: rgba(230, 57, 70, 0.6);
+            --emerald: #2ec4b6;
+            --emerald-glow: rgba(46, 196, 182, 0.4);
+            --text-primary: #f8f9fa;
+            --text-secondary: #a0aec0;
+            --glass-bg: rgba(8, 8, 12, 0.75);
+            --glass-border: rgba(212, 178, 111, 0.18);
+            --font-ui: 'Cairo', 'Tajawal', sans-serif;
+            --font-poetry: 'Amiri', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        /* Prevent scroll when loader is active */
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Screen Shake Animation */
+        @keyframes screenShake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-3px, -3px) rotate(-0.3deg); }
+            30% { transform: translate(4px, 3px) rotate(0.4deg); }
+            50% { transform: translate(-2px, 3px) rotate(-0.3deg); }
+            70% { transform: translate(3px, 2px) rotate(0.3deg); }
+            90% { transform: translate(-3px, -2px) rotate(-0.1deg); }
+        }
+
+        .shake-active {
+            animation: screenShake 0.45s ease-in-out;
+        }
+
+        /* Ambient glowing spots in background */
+        .ambient-glow {
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(150px);
+            opacity: 0.18;
+            transition: all 1.5s ease;
+        }
+
+        .glow-top-left {
+            top: -250px;
+            left: -250px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+        }
+
+        .glow-bottom-right {
+            bottom: -250px;
+            right: -250px;
+            background: radial-gradient(circle, var(--crimson) 0%, transparent 70%);
+        }
+
+        /* Interactive Canvas Background */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: all;
+        }
+
+        /* Curtain Opening Entrance Effect */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #020203;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.5s;
+            direction: rtl;
+        }
+
+        #loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.05);
+        }
+
+        .loader-poetry-wrapper {
+            text-align: center;
+            margin-bottom: 45px;
+            max-width: 650px;
+            padding: 0 25px;
+        }
+
+        .loader-poetic-line {
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin: 18px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 1.5px;
+            font-family: var(--font-poetry);
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .loader-poetic-line.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            color: var(--gold-bright);
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .loader-number-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .loader-number-container.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .loader-glow-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top-color: var(--gold);
+            border-bottom-color: var(--crimson);
+            border-left-color: var(--emerald);
+            border-radius: 50%;
+            animation: spinLoader 4s linear infinite;
+        }
+
+        .loader-number {
+            font-size: 95px;
+            font-weight: 900;
+            color: transparent;
+            background: linear-gradient(135deg, var(--gold-bright), #ffffff, var(--crimson));
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 0 25px var(--gold-glow));
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        .loader-button {
+            margin-top: 50px;
+            padding: 14px 40px;
+            background: rgba(212, 178, 111, 0.05);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: var(--font-ui);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 35px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(212, 178, 111, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .loader-button.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .loader-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: 0.6s;
+        }
+
+        .loader-button:hover::before {
+            left: 100%;
+        }
+
+        .loader-button:hover {
+            background-color: var(--gold);
+            color: #000000;
+            box-shadow: 0 0 35px var(--gold-glow);
+            transform: scale(1.08) translateY(-2px);
+        }
+
+        /* Main Container layout */
+        .wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 90px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
+            pointer-events: none; /* Mouse coordinates pass to canvas, kids enable pointer-events */
+        }
+
+        .interactive-element {
+            pointer-events: all;
+        }
+
+        /* Header Area */
+        header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .top-subtitle {
+            font-size: 0.95rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 1s ease-out;
+            text-shadow: 0 0 10px rgba(212, 178, 111, 0.2);
+        }
+
+        .top-subtitle::before, .top-subtitle::after {
+            content: '';
+            display: inline-block;
+            width: 25px;
+            height: 1px;
+            background-color: var(--gold);
+        }
+
+        .title-container h1 {
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 20%, var(--gold-bright) 60%, var(--crimson));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 20px rgba(0,0,0,0.9));
+            animation: zoomReveal 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Sound HUD Controls */
+        .audio-hud {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+            background: rgba(5, 5, 8, 0.8);
+            border: 1px solid var(--glass-border);
+            padding: 9px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            direction: ltr;
+        }
+
+        .audio-hud:hover {
+            border-color: var(--gold-bright);
+            box-shadow: 0 0 20px rgba(212, 178, 111, 0.35);
+            transform: translateY(-3px);
+        }
+
+        .audio-icon-container {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .audio-icon-container svg {
+            fill: var(--gold);
+            width: 100%;
+            height: 100%;
+            transition: fill 0.3s, transform 0.3s;
+        }
+
+        .audio-hud.muted svg {
+            fill: var(--text-secondary);
+            transform: scale(0.9);
+        }
+
+        .audio-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-family: var(--font-ui);
+            letter-spacing: 1px;
+        }
+
+        /* Cards and Sections Styles */
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 45px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.6s, box-shadow 0.6s, transform 0.1s;
+        }
+
+        .card:hover {
+            border-color: rgba(212, 178, 111, 0.45);
+            box-shadow: 0 20px 60px rgba(212, 178, 111, 0.12), 0 5px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hero Card */
+        .hero-card {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 50px;
+            min-height: 420px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 40px 25px;
+            }
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero-left h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.35;
+        }
+
+        .hero-left p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            line-height: 1.95;
+            font-weight: 300;
+        }
+
+        .badge-18-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .giant-badge-18 {
+            font-size: clamp(9rem, 16vw, 13rem);
+            font-weight: 900;
+            line-height: 1;
+            font-family: var(--font-ui);
+            background: linear-gradient(135deg, var(--gold-bright) 20%, #ffffff 50%, var(--crimson));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            filter: drop-shadow(0 15px 35px rgba(212,178,111,0.35));
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.3);
+        }
+
+        .giant-badge-18:hover {
+            transform: scale(1.15) rotate(7deg);
+            filter: drop-shadow(0 20px 50px var(--gold-glow));
+        }
+
+        .giant-badge-halo {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 178, 111, 0.2) 0%, transparent 70%);
+            z-index: 1;
+            animation: floatGlow 4s ease-in-out infinite;
+        }
+
+        /* Brotherhood Card Section */
+        .brotherhood-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 35px;
+            text-align: center;
+        }
+
+        .brotherhood-graphic {
+            width: 100%;
+            max-width: 480px;
+            height: 170px;
+            margin: 0 auto;
+        }
+
+        .brotherhood-text-wrapper {
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .brotherhood-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--gold-bright);
+            text-shadow: 0 3px 15px rgba(0,0,0,0.6);
+        }
+
+        .brotherhood-body {
+            font-size: 1.2rem;
+            line-height: 2.1;
+            color: var(--text-primary);
+            font-weight: 300;
+        }
+
+        .highlight-text {
+            color: var(--gold);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight-text::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: rgba(212, 178, 111, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Pulse line animations on SVG */
+        .pulse-bridge {
+            stroke-dasharray: 12 8;
+            animation: dashFlow 4s linear infinite;
+        }
+
+        @keyframes dashFlow {
+            to {
+                stroke-dashoffset: -100;
+            }
+        }
+
+        .svg-glow-circle {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .svg-glow-circle:hover {
+            r: 52;
+            fill: rgba(212, 178, 111, 0.15);
+            filter: drop-shadow(0 0 20px var(--gold-glow));
+        }
+
+        .flags-unity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .country-tag {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .country-tag:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .tag-iraq {
+            border-left: 4px solid #28a745;
+        }
+
+        .tag-palestine {
+            border-left: 4px solid #dc3545;
+        }
+
+        /* Classical Poetry scroll layout */
+        .poetry-card {
+            background: linear-gradient(to bottom, rgba(10, 10, 15, 0.85), rgba(5, 5, 8, 0.9));
+            border-left: 3px double var(--gold);
+            border-right: 3px double var(--gold);
+            text-align: center;
+            padding: 55px 35px;
+        }
+
+        .scroll-ornament {
+            width: 90px;
+            height: 25px;
+            margin: 0 auto 30px auto;
+            opacity: 0.8;
+        }
+
+        .poetry-title {
+            font-family: var(--font-poetry);
+            font-size: 2.5rem;
+            color: var(--gold-bright);
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .poem-container {
+            font-family: var(--font-poetry);
+            font-size: 1.7rem;
+            line-height: 2.3;
+            color: #ffffff;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .poem-verse {
+            display: grid;
+            grid-template-columns: 1fr 65px 1fr;
+            align-items: center;
+            gap: 25px;
+            margin: 25px 0;
+            padding: 12px 20px;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .poem-verse::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 178, 111, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: 16px;
+            z-index: 1;
+        }
+
+        .poem-verse:hover::before {
+            opacity: 1;
+        }
+
+        .poem-verse:hover {
+            background: rgba(212, 178, 111, 0.04);
+            transform: scale(1.025);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .hemistich {
+            transition: color 0.4s, transform 0.4s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .poem-verse:hover .hemistich {
+            color: var(--gold-bright);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.45);
+        }
+
+        .poem-verse:hover .first-half {
+            transform: translateX(-5px);
+        }
+
+        .poem-verse:hover .second-half {
+            transform: translateX(5px);
+        }
+
+        .poem-separator {
+            font-size: 1.3rem;
+            color: var(--gold);
+            opacity: 0.6;
+            z-index: 2;
+        }
+
+        .poem-hint {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 35px;
+            letter-spacing: 1.5px;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            .poem-verse {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                margin: 35px 0;
+            }
+            .poem-separator {
+                display: none;
+            }
+            .first-half, .second-half {
+                transform: none !important;
+            }
+            .poem-container {
+                font-size: 1.45rem;
+            }
+        }
+
+        /* Celebration Fireworks Section */
+        .celebration-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 60px 40px;
+        }
+
+        .celebration-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-bright), #ffffff, var(--crimson));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.25));
+        }
+
+        .celebration-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.9;
+            font-weight: 300;
+        }
+
+        /* Interactive Ignite Button */
+        .ignite-btn {
+            background: linear-gradient(135deg, var(--gold), var(--crimson));
+            color: #ffffff;
+            font-family: var(--font-ui);
+            font-size: 1.3rem;
+            font-weight: 800;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 45px;
+            cursor: pointer;
+            box-shadow: 0 0 35px rgba(230, 57, 70, 0.35), 0 0 20px rgba(212, 178, 111, 0.35);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ignite-btn:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 0 50px rgba(230, 57, 70, 0.75), 0 0 30px rgba(212, 178, 111, 0.75);
+        }
+
+        .ignite-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ignite-btn .btn-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            transition: 0.7s;
+        }
+
+        .ignite-btn:hover .btn-glow {
+            left: 100%;
+        }
+
+        /* 3D Holographic Secret Revealed Letter Card */
+        #revealed-letter-box {
+            display: none;
+            width: 100%;
+            max-width: 850px;
+            margin: 50px auto 0 auto;
+            opacity: 0;
+            transform: scale(0.85) translateY(40px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            background: radial-gradient(circle at top left, rgba(212, 178, 111, 0.12), transparent 45%), var(--glass-bg);
+            border: 1px solid rgba(212, 178, 111, 0.35);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 178, 111, 0.15);
+            transform-style: preserve-3d;
+        }
+
+        #revealed-letter-box.reveal-show {
+            display: block;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .letter-content {
+            text-align: right;
+            line-height: 2.25;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            font-weight: 300;
+        }
+
+        .letter-header {
+            border-bottom: 1px dashed rgba(212, 178, 111, 0.25);
+            padding-bottom: 18px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .letter-header h3 {
+            color: var(--gold-bright);
+            font-size: 1.65rem;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+        }
+
+        .letter-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .letter-paragraph {
+            margin-bottom: 22px;
+            text-indent: 30px;
+        }
+
+        .letter-footer {
+            margin-top: 40px;
+            border-top: 1px dashed rgba(212, 178, 111, 0.25);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 50px;
+            letter-spacing: 2px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 35px;
+            font-weight: 300;
+        }
+
+        /* Keyframes */
+        @keyframes spinLoader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 18px var(--gold-glow)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 38px rgba(230, 57, 70, 0.7)); transform: scale(1.06); }
+        }
+
+        @keyframes floatGlow {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-20px) scale(1.12); opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes zoomReveal {
+            from { transform: scale(0.85); opacity: 0; filter: blur(8px); }
+            to { transform: scale(1); opacity: 1; filter: blur(0); }
+        }
+
+        /* Grid Overlay Pattern */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="loading">
+
+    <div class="grid-overlay"></div>
+    <div class="ambient-glow glow-top-left"></div>
+    <div class="ambient-glow glow-bottom-right"></div>
+
+    <!-- Background Canvas for Interactive Particles & Fireworks -->
+    <canvas id="background-canvas"></canvas>
+
+    <!-- Audio Control HUD -->
+    <div class="audio-hud interactive-element" id="audioToggle">
+        <div class="audio-icon-container">
+            <svg id="speaker-icon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+        </div>
+        <span class="audio-label" id="audioText">SOUND ON</span>
+    </div>
+
+    <!-- Cinematic Loader with Poetic Intro Sequence -->
+    <div id="loader">
+        <div class="loader-poetry-wrapper">
+            <p class="loader-poetic-line" id="line1">في قلب بغداد، وُلد عهد الوفاء...</p>
+            <p class="loader-poetic-line" id="line2">وفي كنف القدس، ترعرع الصمود والثبات...</p>
+            <p class="loader-poetic-line" id="line3">واليوم، يكتمل ميثاق الإخوة بالـ 18 لـ إبراهيم...</p>
+        </div>
+        <div class="loader-number-container" id="loaderNumberCont">
+            <div class="loader-glow-circle"></div>
+            <span class="loader-number">18</span>
+        </div>
+        <button class="loader-button interactive-element" id="enterBtn">ادخل بوابـة الوفاء ✦</button>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="wrapper">
+        
+        <!-- Header -->
+        <header>
+            <div class="top-subtitle interactive-element">مِنْ مُحَمَّدٍ إِلَى إِبْرَاهِيمَ ✦ رَابِطَةُ دَمٍ لَا تُقَيِّدُهَا المَسَافَاتُ</div>
+            <div class="title-container">
+                <h1 class="interactive-element">مِنَ الفُرَاتِ إِلَى القُدْسِ شَرِيفاً</h1>
+            </div>
+        </header>
+
+        <!-- Section 1: Hero & Interactive Glowing "18" -->
+        <section class="card hero-card interactive-element" id="cardHero">
+            <div class="hero-left">
+                <h2>عيد ميلاد سعيد يا سندي وعضدي إبراهيم!</h2>
+                <p>
+                    اليوم، يكتمل العام الثامن عشر من عمرك المبارك يا إبراهيم. ثمانية عشر عاماً من الشموخ، والعزة، وبناء النفس. لم تكن المسافات بين دجلة والقدس يوماً حاجزاً، بل كانت نبضاً يربط قلوبنا بجسور الإخاء المتينة.
+                </p>
+                <p style="color: var(--gold);">
+                    أخي الغالي إبراهيم، إن عمرك اليوم هو فجر جديد يشرق بالرجولة والثبات، وعيدك هذا ليس ذكرى ولادة فحسب، بل هو احتفال ببروز أخ وصاحب لا تثنيه النوائب.
+                </p>
+            </div>
+            <div class="badge-18-container">
+                <div class="giant-badge-halo"></div>
+                <div class="giant-badge-18" id="badge18">18</div>
+            </div>
+        </section>
+
+        <!-- Section 2: Palestine to Iraq Interactive SVG Map Card -->
+        <section class="card brotherhood-card interactive-element" id="cardBrotherhood">
+            
+            <div class="brotherhood-graphic">
+                <svg viewBox="0 0 500 180" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffd700" stop-opacity="0.9" />
+                            <stop offset="100%" stop-color="#d4b26f" stop-opacity="0.9" />
+                        </linearGradient>
+                        <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.9" />
+                            <stop offset="100%" stop-color="#e63946" stop-opacity="0.9" />
+                        </linearGradient>
+                        <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#2ec4b6" stop-opacity="0.9" />
+                            <stop offset="100%" stop-color="#119da4" stop-opacity="0.9" />
+                        </linearGradient>
+                        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="10" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+                    
+                    <!-- Connection Line (Bridge of unity) -->
+                    <path id="unityBridgeGold" d="M145 90 C 200 50, 300 130, 355 90" fill="none" stroke="url(#goldGrad)" stroke-width="4.5" class="pulse-bridge" filter="url(#glow)" />
+                    <path id="unityBridgeCrimson" d="M145 90 C 200 130, 300 50, 355 90" fill="none" stroke="url(#crimsonGrad)" stroke-width="4.5" class="pulse-bridge" filter="url(#glow)" />
+                    
+                    <!-- Left Node (Iraq: Palm / Star motif) -->
+                    <g id="nodeIraq">
+                        <circle cx="100" cy="90" r="46" fill="rgba(10,10,15,0.95)" stroke="url(#goldGrad)" stroke-width="2.5" filter="url(#glow)" class="svg-glow-circle" />
+                        <path d="M100 55 L100 125 M100 80 L75 65 M100 80 L125 65 M100 95 L70 85 M100 95 L130 85 M100 110 L75 115 M100 110 L125 115" stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round" />
+                    </g>
+                    
+                    <!-- Center heart badge -->
+                    <g id="nodeCenter">
+                        <path d="M250 68 C 240 50, 215 50, 215 75 C 215 105, 250 125, 250 125 C 250 125, 285 105, 285 75 C 285 50, 260 50, 250 68 Z" fill="rgba(6, 6, 9, 0.95)" stroke="url(#goldGrad)" stroke-width="2" filter="url(#glow)"/>
+                        <polygon points="250,75 253,82 260,82 255,87 257,94 250,90 243,94 245,87 240,82 247,82" fill="url(#goldGrad)" />
+                    </g>
+                    
+                    <!-- Right Node (Palestine: Olive motif) -->
+                    <g id="nodePal">
+                        <circle cx="400" cy="90" r="46" fill="rgba(10,10,15,0.95)" stroke="url(#crimsonGrad)" stroke-width="2.5" filter="url(#glow)" class="svg-glow-circle" />
+                        <path d="M380 115 C 385 100, 395 80, 420 70 M388 95 C 382 85, 385 75, 395 72 M405 85 C 400 70, 412 60, 422 65 M395 107 C 402 100, 415 105, 410 115" fill="none" stroke="url(#crimsonGrad)" stroke-width="3" stroke-linecap="round" />
+                    </g>
+                </svg>
+            </div>
+
+            <div class="brotherhood-text-wrapper">
+                <h3 class="brotherhood-title">ميثاق الإخوة والدم</h3>
+                <p class="brotherhood-body">
+                    بين <span class="highlight-text">الرافدين العظيمين</span> في العراق الحبيب، و<span class="highlight-text">أرض الإسراء والشهامة</span> في فلسطين المحتلة، يُروى تاريخ من الأخوة الحقيقية.
+                    لقد عرفتُك يا إبراهيم منذ بضعة أشهر فقط، لكنها في ميزان الرجولة والوفاء تزن عقوداً ودهوراً. إن روح الإخاء التي جمعتنا يا صديقي قد بنيت على أساس صلب من المبادئ، والصدق، والشدة في الحق. نقف معاً، وندعم بعضنا، ولا نبالي بعوائق الجغرافيا.
+                </p>
+                
+                <div class="flags-unity">
+                    <div class="country-tag tag-iraq">العــراق 🇮🇶</div>
+                    <div class="country-tag tag-palestine">فلسطـين 🇵🇸</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Classical Arabic Poem scroll layout -->
+        <section class="card poetry-card interactive-element" id="cardPoetry">
+            <svg class="scroll-ornament" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 10 C 20 0, 30 20, 50 10 C 70 0, 80 20, 100 10" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+                <circle cx="50" cy="10" r="4" fill="var(--gold-bright)"/>
+            </svg>
+            
+            <h3 class="poetry-title">ديوان الوفاء</h3>
+            <div class="poem-dedication" style="font-size: 1.15rem; color: var(--gold); margin-bottom: 25px; font-weight: 300; font-family: var(--font-ui);">
+                مُهداةٌ من محمد إلى أخيه وسنده إبراهيم بمناسبة ميلاده الـ 18
+            </div>
+            
+            <div class="poem-container">
+                <!-- Verse 1 -->
+                <div class="poem-verse" data-verse="1">
+                    <div class="hemistich first-half">عُمُرٌ مَضَى وَالعَهْدُ يَكْتُبُ مَجْدَنَا</div>
+                    <div class="poem-separator">✦</div>
+                    <div class="hemistich second-half">بَيْنَ الفُرَاتِ وَقُدْسِنَا بِوِصَالِ</div>
+                </div>
+                
+                <!-- Verse 2 -->
+                <div class="poem-verse" data-verse="2">
+                    <div class="hemistich first-half">اليَوْمَ يَا سَنَدِي تُتِمُّ ثَمَانِياً</div>
+                    <div class="poem-separator">✦</div>
+                    <div class="hemistich second-half">عَشْراً وَتَكْتُبُ صَفْحَةً بِجَمَالِ</div>
+                </div>
+                
+                <!-- Verse 3 -->
+                <div class="poem-verse" data-verse="3">
+                    <div class="hemistich first-half">عَهْدُ الإِخَاءِ مِنَ العِرَاقِ لِقُدْسِنَا</div>
+                    <div class="poem-separator">✦</div>
+                    <div class="hemistich second-half">حَبْلٌ مَتِينٌ وَاقِفٌ كَجِبَالِ</div>
+                </div>
+                
+                <!-- Verse 4 -->
+                <div class="poem-verse" data-verse="4">
+                    <div class="hemistich first-half">يَا كَاتِبَ التَّارِيخِ سَجِّلْ عَهْدَنَا</div>
+                    <div class="poem-separator">✦</div>
+                    <div class="hemistich second-half">عَهْدَ النَّشَامَى صَادِقاً بِفَعَالِ</div>
+                </div>
+            </div>
+            
+            <p class="poem-hint">موزونة ببحور الشعر الكلاسيكية (بحر الكامل الفصيح) ✦ مرر مؤشر الفأرة على الأبيات لتستمع إلى رجع اللحن</p>
+        </section>
+
+        <!-- Section 4: Celebratory trigger & Revealed letter -->
+        <section class="card celebration-card interactive-element" id="cardCelebration">
+            <h3 class="celebration-title">إطلاق الاحتفالية الكبرى</h3>
+            <p class="celebration-desc">
+                اضغط على الزر أدناه لتفعيل طاقة الاحتفال، إطلاق الألعاب النارية الصاخبة والزهور المضيئة في سماء الصفحة، والكشف عن رسالة الأخوة السرية والتهنئة الخاصة.
+            </p>
+            
+            <button class="ignite-btn" id="igniteBtn">
+                <span class="btn-glow"></span>
+                <span>أشعل الألعاب النارية 🎉</span>
+            </button>
+
+            <!-- Letter revealed with 3D parallax tilt -->
+            <div class="card letter-content" id="revealed-letter-box">
+                <div class="letter-header">
+                    <h3>رسالة من محمد إلى إبراهيم</h3>
+                    <span class="letter-date">23 مايو 2026</span>
+                </div>
+                
+                <p class="letter-paragraph">
+                    أخي الغالي الحبيب إبراهيم في أرض فلسطين الأبية،
+                </p>
+                <p class="letter-paragraph">
+                    أكتب لك هذه الكلمات والقلب يملؤه الفخر بصداقتك وإخوتك يا إبراهيم. اليوم وأنت تدخل عامك الثامن عشر، أرى فيك معاني الرجولة والصمود والثبات التي قلّ نظيرها في زماننا. رغم قصر المدة التي عرفنا فيها بعضنا البعض، إلا أن الروح التقت بالروح، وعلمت يقيناً أن الأخوة الحقيقية تولد في لحظات الصدق ولا تعترف بالجغرافيا.
+                </p>
+                <p class="letter-paragraph">
+                    من بلاد الرافدين من أخيك محمد إلى قدس الأحرار، أعدك أن أبقى لك سنداً وعضداً، وأن تظل هذه الإخوة شامخة راسخة مهما طال الزمان. أسأل الله أن يبارك في عمرك، وأن يحقق أمنياتك، وأن يكتب لك ولأهلك في فلسطين اليسر والنصر والفرج القريب.
+                </p>
+                
+                <div class="letter-footer">
+                    <span>دمت لي سنداً وعضداً يا إبراهيم 🖤</span>
+                    <span>أخوك الوفي محمد (العراق)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="interactive-element">
+            جميع الحقوق محفوظة لصداقة العراق وفلسطين الأبدية © 2026
+        </footer>
+    </div>
+
+    <script>
+        /* Advanced Audio Engine with Oud Synthesis & Ambient Pad Drone */
+        const AudioEngine = {
+            ctx: null,
+            muted: false,
+            init() {
+                if (this.ctx) return;
+                try {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContextClass();
+                } catch(e) {
+                    console.error("Web Audio not supported", e);
+                }
+            },
+            resume() {
+                this.init();
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+            toggleMute() {
+                this.muted = !this.muted;
+                if (this.muted) {
+                    AmbientSynth.stop();
+                } else {
+                    AmbientSynth.start();
+                }
+                return this.muted;
+            },
+            playChime(freq = 440) {
+                if (this.muted) return;
+                this.resume();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + 0.15);
+                osc.frequency.exponentialRampToValueAtTime(freq * 0.8, now + 0.7);
+
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.7);
+            },
+            playInteractiveOud(freq) {
+                if (this.muted) return;
+                this.resume();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                const oscTri = this.ctx.createOscillator();
+                const oscSine = this.ctx.createOscillator();
+                const filter = this.ctx.createBiquadFilter();
+                const gainNode = this.ctx.createGain();
+
+                oscTri.type = 'triangle';
+                oscTri.frequency.setValueAtTime(freq, now);
+
+                oscSine.type = 'sine';
+                oscSine.frequency.setValueAtTime(freq * 2, now); // Double octave overtone
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(2200, now);
+                filter.frequency.exponentialRampToValueAtTime(350, now + 0.45);
+
+                gainNode.gain.setValueAtTime(0.18, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+                oscTri.connect(filter);
+                oscSine.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(this.ctx.destination);
+
+                oscTri.start(now);
+                oscSine.start(now);
+                oscTri.stop(now + 0.55);
+                oscSine.stop(now + 0.55);
+            },
+            playFireworkLaunch() {
+                if (this.muted) return;
+                this.resume();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                // Soft ascending whistle — like a real firework going up
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.exponentialRampToValueAtTime(1100, now + 0.55);
+
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.linearRampToValueAtTime(0.06, now + 0.25);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.55);
+            },
+            playFireworkExplode(pan = 0) {
+                if (this.muted) return;
+                this.resume();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                const actx = this.ctx;
+
+                // Helper: create panned output
+                const makePanner = (sourceNode) => {
+                    if (actx.createStereoPanner) {
+                        const p = actx.createStereoPanner();
+                        p.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), now);
+                        sourceNode.connect(p);
+                        p.connect(actx.destination);
+                    } else {
+                        sourceNode.connect(actx.destination);
+                    }
+                };
+
+                // 1) Bright cinematic POP — the visual explosion moment
+                const popFreqs = [880, 1100, 1320, 660];
+                popFreqs.forEach((f, i) => {
+                    const o = actx.createOscillator();
+                    const g = actx.createGain();
+                    o.type = 'sine';
+                    o.frequency.setValueAtTime(f, now);
+                    o.frequency.exponentialRampToValueAtTime(f * 0.5, now + 0.18);
+                    g.gain.setValueAtTime(0.07, now);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                    o.connect(g);
+                    makePanner(g);
+                    o.start(now + i * 0.012);
+                    o.stop(now + 0.22 + i * 0.012);
+                });
+
+                // 2) Soft filtered sparkle noise (short, not raw boom)
+                try {
+                    const bufSz = Math.floor(actx.sampleRate * 0.28);
+                    const buf = actx.createBuffer(1, bufSz, actx.sampleRate);
+                    const d = buf.getChannelData(0);
+                    for (let i = 0; i < bufSz; i++) d[i] = (Math.random() * 2 - 1);
+
+                    const src = actx.createBufferSource();
+                    src.buffer = buf;
+
+                    const bandpass = actx.createBiquadFilter();
+                    bandpass.type = 'bandpass';
+                    bandpass.frequency.setValueAtTime(3500, now);
+                    bandpass.Q.setValueAtTime(0.6, now);
+
+                    const sparkGain = actx.createGain();
+                    sparkGain.gain.setValueAtTime(0.055, now);
+                    sparkGain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+                    src.connect(bandpass);
+                    bandpass.connect(sparkGain);
+                    makePanner(sparkGain);
+                    src.start(now);
+                    src.stop(now + 0.28);
+                } catch(e) {}
+
+                // 3) Warm low thud (subtle, not overwhelming)
+                const thud = actx.createOscillator();
+                const thudGain = actx.createGain();
+                thud.type = 'sine';
+                thud.frequency.setValueAtTime(90, now);
+                thud.frequency.exponentialRampToValueAtTime(35, now + 0.25);
+                thudGain.gain.setValueAtTime(0.18, now);
+                thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                thud.connect(thudGain);
+                makePanner(thudGain);
+                thud.start(now);
+                thud.stop(now + 0.25);
+            }
+        };
+
+        /* Nostalgic Haunting Ambient Synth — multi-layer warm pad with slow vibrato */
+        const AmbientSynth = {
+            nodes: [],
+            masterGain: null,
+            active: false,
+            vibratoInterval: null,
+
+            start() {
+                if (this.active || AudioEngine.muted || !AudioEngine.ctx) return;
+                const actx = AudioEngine.ctx;
+                const now = actx.currentTime;
+
+                this.masterGain = actx.createGain();
+                this.masterGain.gain.setValueAtTime(0, now);
+                this.masterGain.gain.linearRampToValueAtTime(0.032, now + 4.5); // Very slow fade-in for nostalgia
+
+                // Warm reverb-like effect using two delay nodes
+                const delay1 = actx.createDelay(2.0);
+                delay1.delayTime.setValueAtTime(0.38, now);
+                const delay2 = actx.createDelay(2.0);
+                delay2.delayTime.setValueAtTime(0.62, now);
+                const delayGain = actx.createGain();
+                delayGain.gain.setValueAtTime(0.3, now);
+
+                // Main lowpass filter for a warm, muffled, nostalgic feel
+                const warmFilter = actx.createBiquadFilter();
+                warmFilter.type = 'lowpass';
+                warmFilter.frequency.setValueAtTime(520, now);
+                warmFilter.Q.setValueAtTime(1.2, now);
+
+                // Layer 1: Root note D3 (haunting deep tone)
+                const osc1 = actx.createOscillator();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(146.83, now);
+
+                // Layer 2: Fifth A3 (harmonic openness)
+                const osc2 = actx.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(220.00, now);
+
+                // Layer 3: High soft shimmer (like a distant qanun string)
+                const osc3 = actx.createOscillator();
+                osc3.type = 'triangle';
+                osc3.frequency.setValueAtTime(440.00, now); // A4
+                const osc3Gain = actx.createGain();
+                osc3Gain.gain.setValueAtTime(0.3, now); // quieter
+
+                // Layer 4: Sub bass breath (barely audible, felt more than heard)
+                const osc4 = actx.createOscillator();
+                osc4.type = 'sine';
+                osc4.frequency.setValueAtTime(73.42, now); // D2 sub
+                const osc4Gain = actx.createGain();
+                osc4Gain.gain.setValueAtTime(0.45, now);
+
+                // Connect graph
+                osc1.connect(warmFilter);
+                osc2.connect(warmFilter);
+                osc3.connect(osc3Gain); osc3Gain.connect(warmFilter);
+                osc4.connect(osc4Gain); osc4Gain.connect(warmFilter);
+
+                warmFilter.connect(this.masterGain);
+
+                // Delay feedback for reverb feel
+                this.masterGain.connect(delay1);
+                delay1.connect(delayGain);
+                delayGain.connect(delay2);
+                delay2.connect(delayGain); // feedback
+                delayGain.connect(actx.destination);
+
+                this.masterGain.connect(actx.destination);
+
+                osc1.start(now); osc2.start(now); osc3.start(now); osc4.start(now);
+                this.nodes = [osc1, osc2, osc3, osc4];
+                this.active = true;
+
+                // Slow vibrato on the shimmer layer for haunting feel
+                let vPhase = 0;
+                this.vibratoInterval = setInterval(() => {
+                    if (!this.active) return;
+                    vPhase += 0.06;
+                    const vibrato = 1 + Math.sin(vPhase) * 0.008; // very subtle ±0.8% pitch wobble
+                    try { osc3.frequency.setValueAtTime(440 * vibrato, actx.currentTime); } catch(e) {}
+                }, 80);
+
+                // Breathing swell — volume gently pulses
+                let swellPhase = 0;
+                this.swellInterval = setInterval(() => {
+                    if (!this.active) return;
+                    swellPhase += 0.025;
+                    const swell = 0.032 + Math.sin(swellPhase) * 0.008;
+                    try { this.masterGain.gain.setValueAtTime(swell, actx.currentTime); } catch(e) {}
+                }, 100);
+            },
+
+            stop() {
+                if (!this.active) return;
+                clearInterval(this.vibratoInterval);
+                clearInterval(this.swellInterval);
+                const now = AudioEngine.ctx.currentTime;
+                if (this.masterGain) {
+                    this.masterGain.gain.linearRampToValueAtTime(0, now + 2.0);
+                    setTimeout(() => {
+                        this.nodes.forEach(o => { try { o.stop(); } catch(e) {} });
+                        this.nodes = [];
+                        this.active = false;
+                    }, 2100);
+                }
+            }
+        };
+
+        /* Bind Sound HUD Controls click listener */
+        const audioToggle = document.getElementById('audioToggle');
+        const audioText = document.getElementById('audioText');
+        audioToggle.addEventListener('click', () => {
+            const isMuted = AudioEngine.toggleMute();
+            if (isMuted) {
+                audioToggle.classList.add('muted');
+                audioText.innerText = "SOUND OFF";
+            } else {
+                audioToggle.classList.remove('muted');
+                audioText.innerText = "SOUND ON";
+                AudioEngine.playInteractiveOud(293.66); // play note D
+            }
+        });
+
+        /* Loader Sequence Simulation */
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+        const numCont = document.getElementById('loaderNumberCont');
+        const enterBtn = document.getElementById('enterBtn');
+
+        setTimeout(() => { line1.classList.add('fade-in'); }, 600);
+        setTimeout(() => { line2.classList.add('fade-in'); }, 1800);
+        setTimeout(() => { line3.classList.add('fade-in'); }, 3000);
+        setTimeout(() => { numCont.classList.add('show'); }, 4200);
+        setTimeout(() => { enterBtn.classList.add('show'); }, 5000);
+
+        enterBtn.addEventListener('click', () => {
+            document.getElementById('loader').classList.add('fade-out');
+            document.body.classList.remove('loading');
+            AudioEngine.resume();
+            
+            // Start the ambient pad drone
+            setTimeout(() => {
+                AmbientSynth.start();
+            }, 800);
+
+            // Intro chimes sequence
+            AudioEngine.playChime(293.66); // D4
+            setTimeout(() => { AudioEngine.playChime(369.99); }, 200); // F#4
+            setTimeout(() => { AudioEngine.playChime(440.00); }, 400); // A4
+            setTimeout(() => { AudioEngine.playChime(587.33); }, 600); // D5
+        });
+
+        /* Canvas Particle System & Celebration Fireworks Simulation */
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        let mouse = { x: null, y: null, active: false };
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            mouse.active = true;
+        });
+
+        window.addEventListener('mouseout', () => {
+            mouse.active = false;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+                mouse.active = true;
+            }
+        });
+
+        window.addEventListener('touchend', () => {
+            mouse.active = false;
+        });
+
+        // Click anywhere to play interactive Oud (Hijaz Scale)
+        canvas.addEventListener('click', (e) => {
+            if (document.body.classList.contains('loading')) return;
+            
+            const xRatio = e.clientX / width;
+            // Hijaz scale frequencies: D4, Eb4, F#4, G4, A4, Bb4, C5, D5
+            const notesHijaz = [293.66, 311.13, 369.99, 392.00, 440.00, 466.16, 523.25, 587.33];
+            const noteIndex = Math.floor(xRatio * notesHijaz.length);
+            const freq = notesHijaz[Math.min(noteIndex, notesHijaz.length - 1)];
+            
+            AudioEngine.playInteractiveOud(freq);
+            
+            // Add canvas ripples
+            ripples.push(new RippleParticle(e.clientX, e.clientY));
+        });
+
+        // Canvas Click Ripple Particle
+        class RippleParticle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 2;
+                this.maxRadius = Math.random() * 50 + 60;
+                this.alpha = 0.8;
+                this.speed = Math.random() * 2.5 + 2.5;
+            }
+            update() {
+                this.radius += this.speed;
+                this.alpha -= 0.015;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.strokeStyle = 'rgba(212, 178, 111, 0.7)';
+                ctx.lineWidth = 1.5;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = 'var(--gold)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        const ripples = [];
+
+        // Ambient Floating Particles
+        class AmbientParticle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height;
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + 10;
+                this.size = Math.random() * 2.2 + 0.6;
+                this.speedY = -(Math.random() * 0.7 + 0.25);
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.alpha = Math.random() * 0.55 + 0.25;
+                this.color = Math.random() > 0.45 ? '212, 178, 111' : '255, 255, 255'; // Gold or white
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+
+                // Subtle attraction to mouse cursor
+                if (mouse.active) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 160) {
+                        this.x += dx * 0.006;
+                        this.y += dy * 0.006;
+                    }
+                }
+
+                if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = `rgba(${this.color}, 0.8)`;
+                ctx.fillStyle = `rgba(${this.color}, 1)`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const ambientCount = 95;
+        const ambientParticles = [];
+        for (let i = 0; i < ambientCount; i++) {
+            ambientParticles.push(new AmbientParticle());
+        }
+
+        // Firework Spark Particle
+        class FireworkSpark {
+            constructor(x, y, color, type = 'normal') {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.type = type;
+                this.angle = Math.random() * Math.PI * 2;
+                
+                if (type === 'heart') {
+                    // Force heart shape coordinates
+                    const t = Math.random() * Math.PI * 2;
+                    const r = 10;
+                    const hX = 16 * Math.sin(t) ** 3;
+                    const hY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                    this.speed = Math.random() * 1.5 + 2.5;
+                    this.vx = (hX / r) * this.speed;
+                    this.vy = (hY / r) * this.speed;
+                } else {
+                    this.speed = Math.random() * 5.5 + 2;
+                    this.vx = Math.cos(this.angle) * this.speed;
+                    this.vy = Math.sin(this.angle) * this.speed;
+                }
+                
+                this.friction = 0.94;
+                this.gravity = 0.13;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.018 + 0.009;
+                this.size = Math.random() * 2.8 + 1;
+            }
+
+            update() {
+                if (this.type === 'heart') {
+                    this.vx *= this.friction;
+                    this.vy *= this.friction;
+                    this.x += this.vx;
+                    this.y += this.vy + this.gravity;
+                } else {
+                    this.speed *= this.friction;
+                    this.x += Math.cos(this.angle) * this.speed;
+                    this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                }
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = this.color;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Falling Flower Particle (Rose petals & Olive leaves)
+        class FlowerParticle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 6 + 4;
+                this.speedY = Math.random() * 1.2 + 0.8;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.angle = Math.random() * 360;
+                this.spinSpeed = Math.random() * 2 - 1;
+                this.color = Math.random() > 0.45 ? 'rgba(230, 57, 70, 0.75)' : 'rgba(46, 196, 182, 0.75)'; // Rose or Olive color
+                this.alpha = 1;
+                this.decay = Math.random() * 0.006 + 0.003;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.angle += this.spinSpeed;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                
+                // Draw petal/leaf shape
+                ctx.beginPath();
+                ctx.moveTo(0, -this.size);
+                ctx.quadraticCurveTo(this.size, -this.size / 2, 0, this.size);
+                ctx.quadraticCurveTo(-this.size, -this.size / 2, 0, -this.size);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+
+        const flowers = [];
+
+        // Firework Rocket Class
+        class FireworkRocket {
+            constructor() {
+                this.x = Math.random() * (width - 160) + 80;
+                this.y = height + 10;
+                this.targetY = Math.random() * (height * 0.5) + height * 0.12;
+                this.speedY = -(Math.random() * 6.5 + 9.5);
+                this.trail = [];
+                this.exploded = false;
+                
+                const colors = [
+                    '#ffd700', // Gold
+                    '#d4b26f', // Obsidian Gold
+                    '#e63946', // Crimson
+                    '#ff4d6d', // Bright Crimson
+                    '#2ec4b6', // Emerald
+                    '#ffffff'  // Pure Light
+                ];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                AudioEngine.playFireworkLaunch();
+            }
+
+            update() {
+                this.trail.push({ x: this.x, y: this.y });
+                if (this.trail.length > 15) this.trail.shift();
+                
+                this.y += this.speedY;
+
+                if (this.y <= this.targetY) {
+                    this.explode();
+                }
+            }
+
+            explode() {
+                this.exploded = true;
+                const panValue = (this.x / width) * 2 - 1; // stereo pan
+                AudioEngine.playFireworkExplode(panValue);
+
+                // Trigger screen shake
+                document.body.classList.add('shake-active');
+                setTimeout(() => {
+                    document.body.classList.remove('shake-active');
+                }, 450);
+
+                // Check explosion type: 15% chance of a heart-shaped firework!
+                const isHeart = Math.random() < 0.22;
+                const sparksCount = isHeart ? 90 : (Math.floor(Math.random() * 70) + 95);
+                
+                for (let i = 0; i < sparksCount; i++) {
+                    fireworkSparks.push(new FireworkSpark(this.x, this.y, this.color, isHeart ? 'heart' : 'normal'));
+                }
+
+                // Add falling celebratory leaves / petals
+                const leafCount = Math.floor(Math.random() * 15) + 15;
+                for (let i = 0; i < leafCount; i++) {
+                    flowers.push(new FlowerParticle(this.x + Math.random()*20 - 10, this.y + Math.random()*20 - 10));
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = this.color;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                for (let i = 0; i < this.trail.length; i++) {
+                    const pt = this.trail[i];
+                    const alpha = i / this.trail.length;
+                    ctx.globalAlpha = alpha;
+                    if (i === 0) ctx.moveTo(pt.x, pt.y);
+                    else ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        const fireworkRockets = [];
+        const fireworkSparks = [];
+        let autoFireworksInterval = null;
+
+        // Core animation Loop
+        function animate() {
+            ctx.fillStyle = 'rgba(3, 3, 5, 0.22)'; // trail bleed
+            ctx.fillRect(0, 0, width, height);
+
+            // Ambient background stars
+            ambientParticles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Update & Draw click ripples
+            for (let i = ripples.length - 1; i >= 0; i--) {
+                const r = ripples[i];
+                r.update();
+                if (r.alpha <= 0) {
+                    ripples.splice(i, 1);
+                } else {
+                    r.draw();
+                }
+            }
+
+            // Update & Draw Rockets
+            for (let i = fireworkRockets.length - 1; i >= 0; i--) {
+                const r = fireworkRockets[i];
+                r.update();
+                if (r.exploded) {
+                    fireworkRockets.splice(i, 1);
+                } else {
+                    r.draw();
+                }
+            }
+
+            // Update & Draw Sparks
+            for (let i = fireworkSparks.length - 1; i >= 0; i--) {
+                const s = fireworkSparks[i];
+                s.update();
+                if (s.alpha <= 0) {
+                    fireworkSparks.splice(i, 1);
+                } else {
+                    s.draw();
+                }
+            }
+
+            // Update & Draw flowers
+            for (let i = flowers.length - 1; i >= 0; i--) {
+                const f = flowers[i];
+                f.update();
+                if (f.alpha <= 0 || f.y > height + 20) {
+                    flowers.splice(i, 1);
+                } else {
+                    f.draw();
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        /* Trigger Celebratory State */
+        const igniteBtn = document.getElementById('igniteBtn');
+        const letterBox = document.getElementById('revealed-letter-box');
+
+        igniteBtn.addEventListener('click', () => {
+            letterBox.classList.add('reveal-show');
+            
+            // Scroll smoothly to letter
+            setTimeout(() => {
+                letterBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+
+            // Launch initial batch of rockets
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    fireworkRockets.push(new FireworkRocket());
+                }, i * 300);
+            }
+
+            // Continuous fireworks trigger if not active
+            if (!autoFireworksInterval) {
+                igniteBtn.innerHTML = "عرض ألعاب نارية مستمر! 🎇";
+                igniteBtn.style.background = "linear-gradient(135deg, #ffd700, #e63946)";
+                
+                autoFireworksInterval = setInterval(() => {
+                    if (Math.random() < 0.55 && fireworkRockets.length < 6) {
+                        fireworkRockets.push(new FireworkRocket());
+                    }
+                }, 900);
+            } else {
+                // Spawn instant burst on additional clicks
+                for(let i=0; i<3; i++) {
+                    setTimeout(() => {
+                        fireworkRockets.push(new FireworkRocket());
+                    }, i * 200);
+                }
+            }
+        });
+
+        /* Verse Hover Oud Chimes Triggers */
+        const verses = document.querySelectorAll('.poem-verse');
+        // Oud / Bayati chord progression frequencies
+        const oudNotes = [
+            293.66, // D4
+            329.63, // E4
+            392.00, // G4
+            440.00  // A4
+        ];
+
+        verses.forEach((verse, idx) => {
+            verse.addEventListener('mouseenter', () => {
+                const note = oudNotes[idx] || 440;
+                AudioEngine.playInteractiveOud(note);
+            });
+            verse.addEventListener('touchstart', () => {
+                const note = oudNotes[idx] || 440;
+                AudioEngine.playInteractiveOud(note);
+            });
+        });
+
+        /* Node Hover triggers */
+        const nodeIraq = document.getElementById('nodeIraq');
+        const nodePal = document.getElementById('nodePal');
+        const bridgeGold = document.getElementById('unityBridgeGold');
+        const bridgeCrimson = document.getElementById('unityBridgeCrimson');
+
+        nodeIraq.addEventListener('mouseenter', () => {
+            AudioEngine.playInteractiveOud(293.66); // play note D
+            bridgeGold.style.stroke = 'var(--gold-bright)';
+            bridgeGold.style.strokeWidth = '6.5px';
+            bridgeGold.style.filter = 'drop-shadow(0 0 20px var(--gold-glow))';
+        });
+        nodeIraq.addEventListener('mouseleave', () => {
+            bridgeGold.style.stroke = 'url(#goldGrad)';
+            bridgeGold.style.strokeWidth = '4.5px';
+            bridgeGold.style.filter = 'url(#glow)';
+        });
+
+        nodePal.addEventListener('mouseenter', () => {
+            AudioEngine.playInteractiveOud(440.00); // play note A
+            bridgeCrimson.style.stroke = 'var(--crimson)';
+            bridgeCrimson.style.strokeWidth = '6.5px';
+            bridgeCrimson.style.filter = 'drop-shadow(0 0 20px var(--crimson-glow))';
+        });
+        nodePal.addEventListener('mouseleave', () => {
+            bridgeCrimson.style.stroke = 'url(#crimsonGrad)';
+            bridgeCrimson.style.strokeWidth = '4.5px';
+            bridgeCrimson.style.filter = 'url(#glow)';
+        });
+
+        /* Card Parallax 3D Tilt Effect */
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth < 768) return; // disable on mobile
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const midX = rect.width / 2;
+                const midY = rect.height / 2;
+                
+                const rotateX = -(y - midY) / 25; // tilt speed
+                const rotateY = (x - midX) / 25;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
