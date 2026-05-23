@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إبراهيم 18 | ميثاق الإخوة والوفاء</title>
+    
+    <!-- GSAP for smooth entrance transitions -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Google Fonts: Amiri for classic poetry, Tajawal and Cairo for modern interface -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== LUXURY PALETTE & RESET ===== */
+        :root {
+            --bg-dark: #040406;
+            --bg-card: rgba(12, 12, 18, 0.85);
+            --gold: #d4b26f;
+            --gold-bright: #ffd700;
+            --gold-glow: rgba(212, 178, 111, 0.4);
+            --crimson: #e63946;
+            --text-primary: #f8f9fa;
+            --text-secondary: #a0aec0;
+            --border-glass: rgba(212, 178, 111, 0.15);
+            --font-ui: 'Cairo', 'Tajawal', sans-serif;
+            --font-poetry: 'Amiri', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Ambient Nebula Glows (Completely Static) */
+        .ambient-glow {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(150px);
+            opacity: 0.15;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+        .glow-top-left {
+            width: 500px;
+            height: 500px;
+            top: -100px;
+            left: -100px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+        }
+        .glow-bottom-right {
+            width: 500px;
+            height: 500px;
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, var(--crimson) 0%, transparent 70%);
+        }
+
+        /* Starry sky canvas */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== AUDIO CONTROLLER HUD ===== */
+        .audio-hud {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+            background: rgba(8, 8, 12, 0.9);
+            border: 1px solid var(--border-glass);
+            padding: 8px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            direction: ltr;
+        }
+        .audio-hud:hover {
+            border-color: var(--gold-bright);
+            box-shadow: 0 0 15px rgba(212, 178, 111, 0.25);
+        }
+        .audio-icon-container {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .audio-icon-container svg {
+            fill: var(--gold);
+            width: 100%;
+            height: 100%;
+        }
+        .audio-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        /* Static wave indicator */
+        .sound-wave {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            width: 16px;
+            height: 10px;
+        }
+        .sound-bar {
+            width: 2px;
+            height: 2px;
+            background-color: var(--gold);
+            border-radius: 1px;
+            transition: height 0.15s ease;
+        }
+        .audio-hud.playing .sound-bar {
+            animation: soundWavePlay 1.2s ease-in-out infinite alternate;
+        }
+        .audio-hud.playing .sound-bar:nth-child(1) { animation-delay: -0.4s; }
+        .audio-hud.playing .sound-bar:nth-child(2) { animation-delay: -0.15s; }
+        .audio-hud.playing .sound-bar:nth-child(3) { animation-delay: -0.7s; }
+        .audio-hud.playing .sound-bar:nth-child(4) { animation-delay: -0.3s; }
+
+        @keyframes soundWavePlay {
+            0% { height: 2px; }
+            100% { height: 10px; }
+        }
+
+        /* ===== FADE INITIAL LOADER ===== */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background-color: #020203;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+        }
+        .loader-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .loader-text {
+            font-family: var(--font-poetry);
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 10px 0;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 1s ease;
+        }
+        .loader-text.show {
+            opacity: 1;
+            transform: translateY(0);
+            color: var(--gold-bright);
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+        .loader-badge {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 1s ease;
+            box-shadow: 0 0 20px rgba(212, 178, 111, 0.15);
+        }
+        .loader-badge.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .loader-badge span {
+            font-size: 55px;
+            font-weight: 900;
+            color: transparent;
+            background: linear-gradient(135deg, var(--gold-bright), #ffffff, var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .loader-btn {
+            padding: 12px 36px;
+            background: rgba(212, 178, 111, 0.08);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.8s ease;
+        }
+        .loader-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .loader-btn:hover {
+            background-color: var(--gold);
+            color: #000;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            opacity: 0; /* Animated by GSAP on load */
+        }
+
+        header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .top-subtitle {
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+        }
+        .top-subtitle::before, .top-subtitle::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background-color: var(--gold);
+            opacity: 0.5;
+        }
+        .main-title {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 30%, var(--gold-bright) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* ===== CARDS STYLE (STATIC HOVER) ===== */
+        .card {
+            background: rgba(12, 12, 18, 0.94); /* Slightly higher opacity for premium obsidian color */
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px); /* Reduced blur to drastically improve repaint performance */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+            transition: border-color 0.4s, box-shadow 0.4s;
+            will-change: transform, opacity; /* Removed filter to prevent unnecessary compositor invalidations */
+        }
+        /* Elegant border glow on hover, but no movement at all */
+        .card:hover {
+            border-color: rgba(212, 178, 111, 0.35);
+            box-shadow: 0 20px 55px rgba(212, 178, 111, 0.05);
+        }
+
+        /* Hero Card Grid */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 40px;
+        }
+        @media (max-width: 768px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .hero-text h2 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        .hero-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.85;
+            font-weight: 300;
+        }
+        .hero-badge-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .static-badge-18 {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.6);
+            box-shadow: 0 0 35px rgba(212, 178, 111, 0.1);
+            animation: slowBreathe 4s ease-in-out infinite;
+        }
+        .static-badge-18 span {
+            font-size: 100px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-bright), #ffffff, var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 10px var(--gold-glow));
+        }
+
+        @keyframes slowBreathe {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(212, 178, 111, 0.08); }
+            50% { transform: scale(1.03); box-shadow: 0 0 45px rgba(212, 178, 111, 0.18); }
+        }
+
+        /* ===== THE BOND SECTION (STATIC SVG MAP) ===== */
+        .bond-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            text-align: center;
+        }
+        .map-container {
+            width: 100%;
+            max-width: 450px;
+            height: 150px;
+        }
+        .map-node {
+            cursor: pointer;
+        }
+        .map-node circle {
+            fill: #0c0c12;
+            stroke: var(--gold);
+            stroke-width: 2;
+            transition: fill 0.3s, stroke 0.3s, filter 0.3s;
+        }
+        .map-node:hover circle {
+            fill: rgba(212, 178, 111, 0.15);
+            stroke: var(--gold-bright);
+            filter: drop-shadow(0 0 8px var(--gold-glow));
+        }
+        .map-node-pal circle {
+            stroke: var(--crimson);
+        }
+        .map-node-pal:hover circle {
+            fill: rgba(230, 57, 70, 0.15);
+            stroke: #ff4d6d;
+            filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.3));
+        }
+        .map-bridge {
+            stroke-dasharray: 8 6;
+            animation: dashPulse 6s linear infinite;
+        }
+        @keyframes dashPulse {
+            to { stroke-dashoffset: -60; }
+        }
+        .bond-text-container {
+            max-width: 750px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .bond-title {
+            font-size: 1.8rem;
+            color: var(--gold-bright);
+            font-weight: 700;
+        }
+        .bond-body {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-primary);
+            font-weight: 300;
+        }
+        .highlight {
+            color: var(--gold-bright);
+            font-weight: 700;
+        }
+        .tags-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .flag-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== POETRY SECTION (STILL HOVER) ===== */
+        .poetry-section {
+            background: linear-gradient(to bottom, rgba(8, 8, 12, 0.9), rgba(4, 4, 6, 0.95));
+            border-left: 2px solid var(--gold);
+            border-right: 2px solid var(--gold);
+            text-align: center;
+            padding: 50px 30px;
+        }
+        .scroll-ornament {
+            width: 70px;
+            height: 15px;
+            margin: 0 auto 20px auto;
+            opacity: 0.7;
+            stroke: var(--gold);
+        }
+        .poetry-title {
+            font-family: var(--font-poetry);
+            font-size: 2.2rem;
+            color: var(--gold-bright);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .poetry-dedication {
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+        .poem-verses-list {
+            font-family: var(--font-poetry);
+            font-size: 1.6rem;
+            line-height: 2.2;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .poem-row {
+            display: grid;
+            grid-template-columns: 1fr 50px 1fr;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        /* Static highlight without movement */
+        .poem-row:hover {
+            background-color: rgba(212, 178, 111, 0.04);
+        }
+        .hemistich {
+            transition: color 0.3s;
+        }
+        .poem-row:hover .hemistich {
+            color: var(--gold-bright);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+        }
+        .divider-bullet {
+            font-size: 1rem;
+            color: var(--gold);
+            opacity: 0.5;
+        }
+        .poetry-footer-note {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 30px;
+            font-weight: 300;
+        }
+        @media (max-width: 768px) {
+            .poem-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            .divider-bullet {
+                display: none;
+            }
+            .poem-verses-list {
+                font-size: 1.35rem;
+            }
+        }
+
+        /* ===== CELEBRATION SECTION ===== */
+        .celebration-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        .celebration-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold-bright), #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .celebration-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+        .action-btn {
+            background: linear-gradient(135deg, var(--gold), #b89047);
+            color: #040406;
+            font-family: var(--font-ui);
+            font-size: 1.15rem;
+            font-weight: 800;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 178, 111, 0.2);
+            transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 178, 111, 0.4);
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+        }
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== REVEALED LETTER (ELEGANT & STATIC) ===== */
+        #letter-reveal-card {
+            display: none;
+            opacity: 0;
+            max-width: 780px;
+            width: 100%;
+            margin: 30px auto 0 auto;
+            border: 1px solid rgba(212, 178, 111, 0.3);
+            background: radial-gradient(circle at top left, rgba(212, 178, 111, 0.05), transparent 45%), var(--bg-card);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 178, 111, 0.05);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .letter-header {
+            border-bottom: 1px dashed rgba(212, 178, 111, 0.2);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .letter-header h3 {
+            color: var(--gold-bright);
+            font-size: 1.45rem;
+            font-weight: 800;
+        }
+        .letter-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .letter-body {
+            text-align: right;
+            line-height: 2.1;
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            font-weight: 300;
+        }
+        .letter-p {
+            margin-bottom: 18px;
+            text-indent: 20px;
+        }
+        .letter-footer {
+            margin-top: 30px;
+            border-top: 1px dashed rgba(212, 178, 111, 0.2);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1rem;
+        }
+        @media (max-width: 480px) {
+            .letter-footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .card {
+                padding: 25px 20px;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 30px;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 25px;
+            font-weight: 300;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="loading">
+
+    <!-- Custom background music fallback -->
+    <audio id="bgMusic" src="music.mp3" loop></audio>
+
+    <!-- Ambient background clouds -->
+    <div class="ambient-glow glow-top-left"></div>
+    <div class="ambient-glow glow-bottom-right"></div>
+
+    <!-- Stars Canvas -->
+    <canvas id="background-canvas"></canvas>
+
+    <!-- Audio HUD -->
+    <div class="audio-hud playing" id="audioToggle">
+        <div class="audio-icon-container">
+            <svg id="speaker-icon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+        </div>
+        <div class="sound-wave" aria-hidden="true">
+            <div class="sound-bar"></div>
+            <div class="sound-bar"></div>
+            <div class="sound-bar"></div>
+            <div class="sound-bar"></div>
+        </div>
+        <span class="audio-label" id="audioText">SOUND ON</span>
+    </div>
+
+    <!-- Quiet Loader -->
+    <div id="loader">
+        <div class="loader-content">
+            <p class="loader-text" id="line1">في قلب بغداد، وُلد عهد الوفاء...</p>
+            <p class="loader-text" id="line2">وفي كنف القدس، ترعرع الصمود والثبات...</p>
+            <p class="loader-text" id="line3">واليوم، يكتمل ميثاق الإخوة بالـ 18 لـ إبراهيم...</p>
+            
+            <div class="loader-badge" id="loaderBadge">
+                <span>18</span>
+            </div>
+            
+            <button class="loader-btn" id="enterBtn">ادخل بوابـة الوفاء ✦</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="wrapper" id="mainWrapper">
+        
+        <!-- Header -->
+        <header>
+            <div class="top-subtitle">مِنْ مُحَمَّدٍ إِلَى إِبْرَاهِيمَ ✦ مِيثَاقُ أُخُوَّةٍ وَوَفَاءٍ أَبَدِيّ</div>
+            <h1 class="main-title text-converge">
+                <span class="word-left">مِنَ الفُرَاتِ</span>
+                <span class="word-right">إِلَى القُدْسِ شَرِيفاً</span>
+            </h1>
+        </header>
+
+        <!-- Section 1: Birthday card and 18 badge -->
+        <section class="card hero-section">
+            <div class="hero-text">
+                <h2>عيد ميلاد سعيد يا أخي وصديقي إبراهيم!</h2>
+                <p>
+                    اليوم، يكتمل العام الثامن عشر من عمرك يا إبراهيم. ثمانية عشر عاماً من الجدّ والاجتهاد وبناء المستقبل. لم تكن المسافات بين العراق وفلسطين يوماً حاجزاً، بل كانت جسراً يربط قلوبنا بميثاق الإخاء المتين.
+                </p>
+                <p style="color: var(--gold); font-weight: 700;">
+                    أخي الغالي إبراهيم، إن عامك الجديد هو بداية مرحلة واعدة بالنجاح والتوفيق، وعيدك هذا مناسبة غالية للاحتفال بأخ كريم وصاحب صدوق نعتز بوجوده.
+                </p>
+            </div>
+            <div class="hero-badge-area">
+                <div class="static-badge-18">
+                    <span>18</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Bond SVG and Info (Static Map) -->
+        <section class="card bond-section">
+            <div class="map-container">
+                <svg viewBox="0 0 500 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffd700" stop-opacity="0.8" />
+                            <stop offset="100%" stop-color="#d4b26f" stop-opacity="0.8" />
+                        </linearGradient>
+                        <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.8" />
+                            <stop offset="100%" stop-color="#e63946" stop-opacity="0.8" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Link between countries -->
+                    <path d="M145 80 C 200 40, 300 120, 355 80" fill="none" stroke="url(#goldGrad)" stroke-width="3" class="map-bridge" />
+                    
+                    <!-- Left Node: Iraq -->
+                    <g class="map-node">
+                        <circle cx="100" cy="80" r="38" />
+                        <text x="100" y="85" fill="#fff" font-size="12" font-weight="700" text-anchor="middle" font-family="var(--font-ui)">العراق</text>
+                    </g>
+                    
+                    <!-- Right Node: Palestine -->
+                    <g class="map-node map-node-pal">
+                        <circle cx="400" cy="80" r="38" />
+                        <text x="400" y="85" fill="#fff" font-size="12" font-weight="700" text-anchor="middle" font-family="var(--font-ui)">فلسطين</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="bond-text-container">
+                <h3 class="bond-title">ميثاق الإخوة والدم</h3>
+                <p class="bond-body">
+                    بين <span class="highlight">الرافدين العظيمين</span> في العراق الحبيب، و<span class="highlight">أرض الإسراء والشهامة</span> في فلسطين الأبية، يُروى تاريخ من الأخوة الحقيقية.
+                    لقد عرفنا بعضنا منذ بضعة أشهر فقط، لكنها كانت كافية لتأكيد صدق المودة وعمق الإخاء. إن هذه الرابطة قد بنيت على أساس صلب من الاحترام والصدق والدعم المتبادل. نقف معاً، ونساند بعضنا، ولا نبالي ببعد الجغرافيا.
+                </p>
+                <div class="tags-container">
+                    <span class="flag-tag">العراق 🇮🇶</span>
+                    <span class="flag-tag">فلسطين 🇵🇸</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Classical Arabic Poem (Static Layout) -->
+        <section class="card poetry-section">
+            <svg class="scroll-ornament" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M10 10 C 30 0, 70 20, 90 10" stroke="url(#goldGrad)" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="50" cy="10" r="3" fill="var(--gold-bright)"/>
+            </svg>
+            
+            <h3 class="poetry-title">ديوان الوفاء</h3>
+            <div class="poetry-dedication">
+                مُهداةٌ من محمد إلى أخيه وسنده إبراهيم بمناسبة ميلاده الـ 18
+            </div>
+            
+            <div class="poem-verses-list">
+                <!-- Verse 1 -->
+                <div class="poem-row">
+                    <div class="hemistich">عُمُرٌ مَضَى وَالعَهْدُ يَكْتُبُ مَجْدَنَا</div>
+                    <div class="divider-bullet">✦</div>
+                    <div class="hemistich">بَيْنَ الفُرَاتِ وَقُدْسِنَا بِوِصَالِ</div>
+                </div>
+                
+                <!-- Verse 2 -->
+                <div class="poem-row">
+                    <div class="hemistich">اليَوْمَ يَا سَنَدِي تُتِمُّ ثَمَانِياً</div>
+                    <div class="divider-bullet">✦</div>
+                    <div class="hemistich">عَشْراً وَتَكْتُبُ صَفْحَةً بِجَمَالِ</div>
+                </div>
+                
+                <!-- Verse 3 -->
+                <div class="poem-row">
+                    <div class="hemistich">عَهْدُ الإِخَاءِ مِنَ العِرَاقِ لِقُدْسِنَا</div>
+                    <div class="divider-bullet">✦</div>
+                    <div class="hemistich">حَبْلٌ مَتِينٌ وَاقِفٌ كَجِبَالِ</div>
+                </div>
+                
+                <!-- Verse 4 -->
+                <div class="poem-row">
+                    <div class="hemistich">يَا كَاتِبَ التَّارِيخِ سَجِّلْ عَهْدَنَا</div>
+                    <div class="divider-bullet">✦</div>
+                    <div class="hemistich">عَهْدَ النَّشَامَى صَادِقاً بِفَعَالِ</div>
+                </div>
+            </div>
+            
+            <p class="poetry-footer-note">موزونة ببحور الشعر الكلاسيكية الفصيحة (بحر الكامل)</p>
+        </section>
+
+        <!-- Section 4: Celebratory Action -->
+        <section class="card celebration-section">
+            <h3 class="celebration-title">إطلاق الاحتفالية الكبرى</h3>
+            <p class="celebration-desc">
+                انقر على الزر أدناه لإطلاق الألعاب النارية الهادئة في سماء الخلفية، والكشف عن رسالة التهنئة الخاصة.
+            </p>
+            
+            <button class="action-btn" id="igniteBtn">
+                <span>أشعل الألعاب النارية 🎉</span>
+            </button>
+        </section>
+
+        <!-- Section 5: Revealed Letter Card -->
+        <div class="card letter-body" id="letter-reveal-card" style="display: none; opacity: 0;">
+            <div class="letter-header">
+                <h3>رسالة من محمد إلى إبراهيم</h3>
+                <span class="letter-date">23 مايو 2026</span>
+            </div>
+            <div class="letter-p">
+                أخي الغالي الحبيب إبراهيم في أرض فلسطين الأبية،
+            </div>
+            <div class="letter-p">
+                أكتب لك هذه الكلمات والقلب يملؤه الفخر بصداقتك وإخوتك يا إبراهيم. اليوم وأنت تدخل عامك الثامن عشر، أرى فيك معاني الجد والالتزام ووفاء الأصدقاء الذي يسعدني دائماً. رغم قصر المدة التي عرفنا فيها بعضنا البعض، إلا أن الأخوة الحقيقية تولد في لحظات الصدق ولا تعترف بالجغرافيا.
+            </div>
+            <div class="letter-p">
+                من بلاد الرافدين من أخيك محمد إلى قدس الأحرار، أعدك أن أبقى لك سنداً وأخاً وفياً، وأن تظل هذه الإخوة راسخة مهما طال الزمان. أسأل الله أن يبارك في عمرك، وأن يحقق أمنياتك، وأن يكتب لك ولأهلك في فلسطين اليسر والفرج القريب.
+            </div>
+            <div class="letter-footer">
+                <span>دمت لي أخاً وصديقاً وفياً يا إبراهيم 🖤</span>
+                <span>أخوك الوفي محمد (العراق)</span>
+            </div>
+        </div>
+
+        <footer>
+            جميع الحقوق محفوظة لصداقة العراق وفلسطين الأبدية © 2026
+        </footer>
+    </div>
+
+    <script>
+        /* ===== 1. PREVENT SCROLL IN LOADER ===== */
+        window.scrollTo(0, 0);
+
+        /* ===== 2. HELPER FUNCTIONS FOR AUDIO FADING ===== */
+        function fadeOutAudio(audioEl, duration = 600, callback) {
+            if (!audioEl || audioEl.paused) {
+                if (callback) callback();
+                return;
+            }
+            let vol = 1.0;
+            const interval = 30;
+            const step = (1.0 / (duration / interval));
+            const fade = setInterval(() => {
+                vol -= step;
+                if (vol <= 0.05) {
+                    clearInterval(fade);
+                    audioEl.pause();
+                    audioEl.volume = 1.0; // reset for next play
+                    if (callback) callback();
+                } else {
+                    audioEl.volume = vol;
+                }
+            }, interval);
+        }
+
+        function fadeInAudio(audioEl, duration = 1000) {
+            if (!audioEl) return;
+            audioEl.volume = 0;
+            audioEl.play().catch(err => console.log("Play failed on fade-in", err));
+            
+            let vol = 0;
+            const interval = 30;
+            const step = (1.0 / (duration / interval));
+            const fade = setInterval(() => {
+                vol += step;
+                if (vol >= 1.0) {
+                    clearInterval(fade);
+                    audioEl.volume = 1.0;
+                } else {
+                    audioEl.volume = Math.min(1.0, vol);
+                }
+            }, interval);
+        }
+
+        /* ===== 3. AUTOPLAY MUSIC ENGINE & INTERACTION FALLBACKS ===== */
+        const autoplayEvents = ['click', 'touchstart', 'pointerdown', 'keydown', 'wheel'];
+        
+        function tryAutoplayOnLoad() {
+            const bgMusicEl = document.getElementById('bgMusic');
+            AudioEngine.muted = false;
+
+            if (bgMusicEl) {
+                bgMusicEl.muted = false;
+                bgMusicEl.play()
+                    .then(() => {
+                        console.log("Autoplay succeeded on load!");
+                        updateAudioHUDState(true);
+                        removeAutoplayListeners();
+                    })
+                    .catch(err => {
+                        console.log("Autoplay blocked. Waiting for first user interaction.");
+                        updateAudioHUDState(true); // Keep UI showing SOUND ON state
+                    });
+            }
+        }
+
+        function handleAutoplayInteraction() {
+            AudioEngine.muted = false;
+            AudioEngine.resume();
+            
+            const bgMusicEl = document.getElementById('bgMusic');
+            if (bgMusicEl && bgMusicEl.paused) {
+                bgMusicEl.muted = false;
+                bgMusicEl.play()
+                    .then(() => {
+                        console.log("Music started playing on user interaction.");
+                        updateAudioHUDState(true);
+                        removeAutoplayListeners();
+                    })
+                    .catch(err => {
+                        console.log("Play failed on interaction:", err);
+                        AmbientSynth.start();
+                        updateAudioHUDState(true);
+                    });
+            } else if (bgMusicEl && !bgMusicEl.paused) {
+                removeAutoplayListeners();
+            }
+        }
+
+        function removeAutoplayListeners() {
+            autoplayEvents.forEach(evt => {
+                window.removeEventListener(evt, handleAutoplayInteraction, { capture: true });
+            });
+        }
+
+        function updateAudioHUDState(playing) {
+            const audioToggle = document.getElementById('audioToggle');
+            const audioText = document.getElementById('audioText');
+            if (!audioToggle) return;
+            
+            if (playing) {
+                audioToggle.classList.remove('muted');
+                audioToggle.classList.add('playing');
+                if (audioText) audioText.innerText = "SOUND ON";
+            } else {
+                audioToggle.classList.add('muted');
+                audioToggle.classList.remove('playing');
+                if (audioText) audioText.innerText = "SOUND OFF";
+            }
+        }
+
+        // Setup immediate global interaction triggers for autoplay
+        autoplayEvents.forEach(evt => {
+            window.addEventListener(evt, handleAutoplayInteraction, { once: true, passive: true, capture: true });
+        });
+
+        // Trigger autoplay on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            tryAutoplayOnLoad();
+        });
+
+        /* ===== 4. LOADER FADE SEQUENCE ===== */
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+        const loaderBadge = document.getElementById('loaderBadge');
+        const enterBtn = document.getElementById('enterBtn');
+
+        setTimeout(() => { line1.classList.add('show'); }, 500);
+        setTimeout(() => { line2.classList.add('show'); }, 1500);
+        setTimeout(() => { line3.classList.add('show'); }, 2500);
+        setTimeout(() => { loaderBadge.classList.add('show'); }, 3500);
+        setTimeout(() => { enterBtn.classList.add('show'); }, 4300);
+
+        enterBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent stopping auto-scroll instantly
+            
+            // Activate AudioEngine
+            AudioEngine.muted = false;
+            AudioEngine.resume();
+            
+            // Play initial chimes
+            AudioEngine.playChime(329.63); // E chime
+            setTimeout(() => { AudioEngine.playChime(392.00); }, 150);
+            setTimeout(() => { AudioEngine.playChime(523.25); }, 300);
+            
+            // Force play music immediately
+            const bgMusicEl = document.getElementById('bgMusic');
+            if (bgMusicEl && bgMusicEl.paused) {
+                bgMusicEl.play().then(() => {
+                    AmbientSynth.stop();
+                }).catch(() => {
+                    AmbientSynth.start();
+                });
+            }
+            updateAudioHUDState(true);
+
+            // Smoothly fade out loader overlay
+            gsap.to('#loader', {
+                opacity: 0,
+                duration: 1.0,
+                ease: 'power2.out',
+                onComplete: () => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.body.classList.remove('loading');
+                    
+                    // Reveal main content smoothly
+                    gsap.to('#mainWrapper', {
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: 'power2.out',
+                        onStart: () => {
+                            // Play header entrance animations exactly when wrapper starts fading in!
+                            gsap.fromTo('.main-title', 
+                                { y: 40, opacity: 0 }, 
+                                { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", delay: 0.1 }
+                            );
+                            gsap.fromTo('.top-subtitle', 
+                                { y: 20, opacity: 0 }, 
+                                { y: 0, opacity: 1, duration: 1.0, ease: "power3.out", delay: 0.3 }
+                            );
+                        },
+                        onComplete: () => {
+                            // Start automated slow showcase scroll
+                            startAutoScroll();
+                        }
+                    });
+                }
+            });
+        });
+
+        /* ===== 5. AUTOMATED SHOWCASE SCROLL WITH DYNAMIC SPEED ===== */
+        let autoScrollActive = false;
+        let autoScrollY = 0;
+        let autoScrollStartTime = null;
+
+        function startAutoScroll() {
+            autoScrollActive = true;
+            autoScrollY = window.scrollY;
+            autoScrollStartTime = performance.now();
+            
+            // Wait for propagation to finish before listening to stops
+            setTimeout(() => {
+                addScrollInteractionListeners();
+            }, 100);
+
+            requestAnimationFrame(autoScrollLoop);
+        }
+
+        function autoScrollLoop(timestamp) {
+            if (!autoScrollActive) return;
+            
+            const elapsed = (timestamp - autoScrollStartTime) / 1000; // in seconds
+            let speed = 0.12; // extremely slow at the very beginning to showcase top banner
+            
+            if (elapsed > 3.5) {
+                // Smooth transition to 0.45 pixels/frame over 5.0 seconds
+                const t = Math.min((elapsed - 3.5) / 5.0, 1.0);
+                speed = 0.12 + t * (0.45 - 0.12);
+            }
+            
+            autoScrollY += speed;
+            window.scrollTo(0, autoScrollY);
+            
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (autoScrollY >= maxScroll) {
+                stopAutoScroll();
+                return;
+            }
+            
+            requestAnimationFrame(autoScrollLoop);
+        }
+
+        function stopAutoScroll() {
+            if (autoScrollActive) {
+                autoScrollActive = false;
+                console.log("Showcase auto-scroll stopped by user interaction.");
+                removeScrollInteractionListeners();
+            }
+        }
+
+        const scrollInteractionEvents = ['wheel', 'touchmove', 'mousedown', 'keydown', 'pointerdown'];
+
+        function addScrollInteractionListeners() {
+            scrollInteractionEvents.forEach(evt => {
+                window.addEventListener(evt, stopAutoScroll, { passive: true });
+            });
+        }
+
+        function removeScrollInteractionListeners() {
+            scrollInteractionEvents.forEach(evt => {
+                window.removeEventListener(evt, stopAutoScroll);
+            });
+        }
+
+        /* ===== 6. WEBAUDIO SYNTHESIZER ENGINE (NO HOVER SOUNDS) ===== */
+        const AudioEngine = {
+            ctx: null,
+            muted: false, // Defaults to false to support direct autoplay
+            init() {
+                if (this.ctx) return;
+                try {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContextClass();
+                } catch(e) {
+                    console.error("Web Audio not supported", e);
+                }
+            },
+            resume() {
+                this.init();
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+            toggleMute() {
+                this.muted = !this.muted;
+                const bgMusicEl = document.getElementById('bgMusic');
+
+                if (this.muted) {
+                    if (bgMusicEl) bgMusicEl.pause();
+                    AmbientSynth.stop();
+                    updateAudioHUDState(false);
+                } else {
+                    this.resume();
+                    updateAudioHUDState(true);
+
+                    // Try to play local music.mp3 file
+                    if (bgMusicEl) {
+                        bgMusicEl.play()
+                            .then(() => {
+                                AmbientSynth.stop();
+                            })
+                            .catch(err => {
+                                AmbientSynth.start();
+                            });
+                    } else {
+                        AmbientSynth.start();
+                    }
+
+                    this.playChime(440); // Soft verification chirp
+                }
+                return this.muted;
+            },
+            playChime(freq = 440) {
+                if (this.muted) return;
+                this.resume();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + 0.12);
+                osc.frequency.exponentialRampToValueAtTime(freq * 0.8, now + 0.6);
+
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.6);
+            },
+            playFireworkLaunch() {
+                if (this.muted || !this.ctx) return;
+                this.resume();
+
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(80, now);
+                osc.frequency.exponentialRampToValueAtTime(320, now + 0.35);
+
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            },
+            playFireworkExplode() {
+                if (this.muted || !this.ctx) return;
+                this.resume();
+
+                const now = this.ctx.currentTime;
+                
+                // Synthesize a realistic deep explosion rumble using filtered white noise
+                const bufferSize = this.ctx.sampleRate * 0.45; // ~0.45s explosion
+                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+
+                const noise = this.ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                // Deep low-pass filter decay
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(900, now);
+                filter.frequency.exponentialRampToValueAtTime(80, now + 0.35);
+
+                const gain = this.ctx.createGain();
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                noise.start(now);
+            },
+            // Fade out current background music/synth to focus on firework sounds
+            fadeBackgroundAndIgnite() {
+                const bgMusicEl = document.getElementById('bgMusic');
+                const isMusicActive = bgMusicEl && !bgMusicEl.paused;
+
+                if (isMusicActive) {
+                    fadeOutAudio(bgMusicEl, 600, () => {
+                        this.triggerFireworksShow();
+                    });
+                } else if (AmbientSynth.active) {
+                    AmbientSynth.fadeOut(600, () => {
+                        this.triggerFireworksShow();
+                    });
+                } else {
+                    this.triggerFireworksShow();
+                }
+            },
+            triggerFireworksShow() {
+                // Trigger 3 sequential firework rockets
+                rockets.push(new FireworkRocket(width / 2, height * 0.3));
+                
+                setTimeout(() => {
+                    rockets.push(new FireworkRocket(width * 0.35, height * 0.25));
+                }, 300);
+
+                setTimeout(() => {
+                    rockets.push(new FireworkRocket(width * 0.65, height * 0.28));
+                }, 600);
+
+                // Smoothly reveal letter card using CSS transition + GSAP
+                const letterCard = document.getElementById('letter-reveal-card');
+                letterCard.style.display = 'block';
+                
+                setTimeout(() => {
+                    gsap.to('#letter-reveal-card', {
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: 'power2.out',
+                        onComplete: () => {
+                            ScrollTrigger.refresh();
+                        }
+                    });
+                    
+                    // Scroll down to show the letter card
+                    setTimeout(() => {
+                        letterCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 400);
+                }, 100);
+
+                // Fade back in the background soundtrack after the fireworks show (4.5 seconds)
+                setTimeout(() => {
+                    if (!this.muted) {
+                        const bgMusicEl = document.getElementById('bgMusic');
+                        if (bgMusicEl) {
+                            fadeInAudio(bgMusicEl, 1000);
+                        } else {
+                            AmbientSynth.start();
+                        }
+                    }
+                }, 4500);
+            }
+        };
+
+        const AmbientSynth = {
+            nodes: [],
+            masterGain: null,
+            active: false,
+            vibratoInterval: null,
+
+            start() {
+                if (this.active || AudioEngine.muted || !AudioEngine.ctx) return;
+                const actx = AudioEngine.ctx;
+                const now = actx.currentTime;
+
+                this.masterGain = actx.createGain();
+                this.masterGain.gain.setValueAtTime(0, now);
+                this.masterGain.gain.linearRampToValueAtTime(0.03, now + 2);
+
+                const filter = actx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(500, now);
+
+                const osc1 = actx.createOscillator();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(146.83, now); // D3
+
+                const osc2 = actx.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(220.00, now); // A3
+
+                osc1.connect(filter);
+                osc2.connect(filter);
+                filter.connect(this.masterGain);
+                this.masterGain.connect(actx.destination);
+
+                osc1.start(now);
+                osc2.start(now);
+                this.nodes = [osc1, osc2];
+                this.active = true;
+            },
+
+            stop() {
+                if (!this.active) return;
+                const now = AudioEngine.ctx.currentTime;
+                if (this.masterGain) {
+                    this.masterGain.gain.linearRampToValueAtTime(0, now + 1.0);
+                    setTimeout(() => {
+                        this.nodes.forEach(n => { try { n.stop(); } catch(e) {} });
+                        this.nodes = [];
+                        this.active = false;
+                    }, 1100);
+                }
+            },
+
+            fadeOut(duration = 600, callback) {
+                if (!this.active || !this.masterGain) {
+                    if (callback) callback();
+                    return;
+                }
+                const actx = AudioEngine.ctx;
+                const now = actx.currentTime;
+                this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, now);
+                this.masterGain.gain.linearRampToValueAtTime(0, now + duration / 1000);
+                setTimeout(() => {
+                    this.nodes.forEach(n => { try { n.stop(); } catch(e) {} });
+                    this.nodes = [];
+                    this.active = false;
+                    if (callback) callback();
+                }, duration + 50);
+            }
+        };
+
+        document.getElementById('audioToggle').addEventListener('click', (e) => {
+            e.stopPropagation();
+            AudioEngine.toggleMute();
+        });
+
+        /* ===== 7. STARS CANVAS BACKGROUND (60FPS DECK DECORATIONS) ===== */
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.3 + 0.2;
+                this.alpha = Math.random();
+                this.speed = Math.random() * 0.012 + 0.004;
+                this.increasing = Math.random() > 0.5;
+            }
+            update() {
+                if (this.increasing) {
+                    this.alpha += this.speed;
+                    if (this.alpha >= 1.0) this.increasing = false;
+                } else {
+                    this.alpha -= this.speed;
+                    if (this.alpha <= 0.1) this.increasing = true;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        const stars = [];
+        const starsCount = 80;
+        for (let i = 0; i < starsCount; i++) {
+            stars.push(new Star());
+        }
+
+        // High-Fidelity organic Firework Sparks with fading trails
+        class Spark {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 4.5 + 1.5;
+                this.vx = Math.cos(this.angle) * this.speed;
+                this.vy = Math.sin(this.angle) * this.speed;
+                this.alpha = 1.0;
+                this.decay = Math.random() * 0.015 + 0.008;
+                this.gravity = 0.05;
+                this.history = [];
+            }
+            update() {
+                this.history.push({ x: this.x, y: this.y });
+                if (this.history.length > 5) this.history.shift();
+
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += this.gravity;
+                this.vx *= 0.98; // air friction
+                this.vy *= 0.98;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                if (this.history.length === 0) return;
+                ctx.beginPath();
+                ctx.moveTo(this.history[0].x, this.history[0].y);
+                for (let i = 1; i < this.history.length; i++) {
+                    ctx.lineTo(this.history[i].x, this.history[i].y);
+                }
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 2.0;
+                ctx.globalAlpha = this.alpha;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        // Firework rocket with trailing sparks
+        class FireworkRocket {
+            constructor(targetX, targetY) {
+                this.x = Math.random() * (width - 120) + 60;
+                this.y = height + 10;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                const dx = this.targetX - this.x;
+                const dy = this.targetY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const speed = 13;
+                this.vx = (dx / dist) * speed;
+                this.vy = (dy / dist) * speed;
+                this.history = [];
+                this.exploded = false;
+                AudioEngine.playFireworkLaunch();
+            }
+            update() {
+                this.history.push({ x: this.x, y: this.y });
+                if (this.history.length > 6) this.history.shift();
+
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                if (this.vy >= 0 || this.y <= this.targetY) {
+                    this.explode();
+                }
+            }
+            explode() {
+                this.exploded = true;
+                AudioEngine.playFireworkExplode();
+                
+                const goldColors = ['#ffd700', '#fff350', '#ffc107', '#ffffff'];
+                const crimsonColors = ['#e63946', '#ff4d6d', '#ff758f', '#ffffff'];
+                const colors = Math.random() > 0.5 ? goldColors : crimsonColors;
+
+                const sparksCount = 75;
+                for (let i = 0; i < sparksCount; i++) {
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    sparks.push(new Spark(this.x, this.y, color));
+                }
+            }
+            draw() {
+                if (this.history.length === 0) return;
+                ctx.beginPath();
+                ctx.moveTo(this.history[0].x, this.history[0].y);
+                for (let i = 1; i < this.history.length; i++) {
+                    ctx.lineTo(this.history[i].x, this.history[i].y);
+                }
+                ctx.strokeStyle = '#ffd700';
+                ctx.lineWidth = 1.8;
+                ctx.stroke();
+            }
+        }
+
+        const rockets = [];
+        const sparks = [];
+
+        function animationLoop() {
+            ctx.fillStyle = 'rgba(4, 4, 6, 0.22)'; // Trail sweep
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw background stars
+            stars.forEach(s => {
+                s.update();
+                s.draw();
+            });
+
+            // Update rockets
+            for (let i = rockets.length - 1; i >= 0; i--) {
+                const r = rockets[i];
+                r.update();
+                if (r.exploded) {
+                    rockets.splice(i, 1);
+                } else {
+                    r.draw();
+                }
+            }
+
+            // Update sparks
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                const s = sparks[i];
+                s.update();
+                if (s.alpha <= 0) {
+                    sparks.splice(i, 1);
+                } else {
+                    s.draw();
+                }
+            }
+
+            requestAnimationFrame(animationLoop);
+        }
+        animationLoop();
+
+        /* ===== 8. IGNITE BTN CLICK ===== */
+        const igniteBtn = document.getElementById('igniteBtn');
+        igniteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            AudioEngine.fadeBackgroundAndIgnite();
+        });
+
+        /* ===== 9. HIGH-END LAG-FREE SCROLLTRIGGERS ===== */
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Respect user prefers-reduced-motion settings
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+            gsap.globalTimeline.timeScale(0);
+        }
+
+        // B. Main Title Diverge/Converge on Scroll (Splits cleanly as you scroll down)
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: 'header',
+                start: 'top 5%',
+                end: 'bottom top',
+                scrub: true,
+            }
+        })
+        .to('.word-left', { x: '-15vw', opacity: 0, ease: 'none' }, 0)
+        .to('.word-right', { x: '15vw', opacity: 0, ease: 'none' }, 0);
+
+        // C. Parallax scroll effect for background ambient glows
+        gsap.to('.glow-top-left', {
+            y: 120,
+            x: 60,
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true
+            }
+        });
+        gsap.to('.glow-bottom-right', {
+            y: -120,
+            x: -60,
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true
+            }
+        });
+
+        // D. Drawing SVG bridge path connecting Iraq and Palestine on scroll
+        const bridgePath = document.querySelector('.map-bridge');
+        if (bridgePath) {
+            const pathLength = bridgePath.getTotalLength();
+            bridgePath.style.strokeDasharray = pathLength;
+            bridgePath.style.strokeDashoffset = pathLength;
+            
+            gsap.to(bridgePath, {
+                strokeDashoffset: 0,
+                duration: 2.2,
+                ease: "power2.inOut",
+                scrollTrigger: {
+                    trigger: '.bond-section',
+                    start: "top 75%",
+                    toggleActions: "play reverse play reverse"
+                }
+            });
+        }
+
+        // E. Poetry verses elegant stagger slide-in
+        gsap.fromTo('.poem-row', 
+            { 
+                opacity: 0, 
+                y: 30,
+                filter: "blur(4px)"
+            }, 
+            {
+                opacity: 1, 
+                y: 0,
+                filter: "blur(0px)",
+                stagger: 0.15,
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.poetry-section',
+                    start: "top 80%",
+                    toggleActions: "play reverse play reverse"
+                }
+            }
+        );
+
+        // F. Stagger reveals for inner cards content (Titles, Badges)
+        gsap.fromTo('.static-badge-18', 
+            { scale: 0.6, opacity: 0, rotation: -12 }, 
+            { 
+                scale: 1, 
+                opacity: 1, 
+                rotation: 0,
+                duration: 1.6, 
+                ease: "back.out(1.2)",
+                scrollTrigger: {
+                    trigger: '.hero-section',
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse"
+                }
+            }
+        );
+        gsap.fromTo('.hero-text h2, .hero-text p', 
+            { opacity: 0, y: 30 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                stagger: 0.18, 
+                duration: 1.2, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.hero-section',
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse"
+                }
+            }
+        );
+        gsap.fromTo('.bond-title, .bond-body, .flag-tag', 
+            { opacity: 0, y: 30 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                stagger: 0.18, 
+                duration: 1.2, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.bond-section',
+                    start: "top 85%",
+                    toggleActions: "play reverse play reverse"
+                }
+            }
+        );
+
+        // G. Lag-Free Scroll Entrance & Exit Reveals for All Cards (Unified timeline to prevent scroll-up bugs)
+        gsap.utils.toArray('.card:not(#letter-reveal-card)').forEach((card) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom", // starts entering from the bottom of viewport
+                    end: "bottom top",    // finishes exiting at the top of viewport
+                    scrub: true,
+                }
+            });
+
+            tl.fromTo(card, 
+                { 
+                    opacity: 0, 
+                    y: 60,
+                    scale: 0.96
+                }, 
+                {
+                    opacity: 1, 
+                    y: 0,
+                    scale: 1,
+                    duration: 0.35, // entrance phase
+                    ease: "power2.out"
+                }
+            )
+            .to(card, {
+                duration: 0.3 // static active phase in the middle
+            })
+            .to(card, {
+                scale: 0.92,
+                opacity: 0.25, // Fades further to compensate for lack of blur
+                y: -50,
+                duration: 0.35, // exit phase
+                ease: "power1.inOut"
+            });
+        });
+    </script>
+</body>
+</html>
